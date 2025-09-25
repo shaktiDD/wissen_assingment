@@ -6,388 +6,56 @@ A comprehensive full-stack vacation calendar application that provides an intell
 
 ### 🌍 Multi-Country Holiday Support
 
-- **200+ Countries Supported**: Comprehensive holiday data for countries worldwide
-- **Special India Focus**: Extensive Indian festival database including Hindu, Islamic, Christian, Sikh, and Buddhist holidays
-- **Smart Fallback System**: Multiple API sources ensure reliable holiday data
-- **Default India Selection**: Application starts with India pre-selected for immediate usability
+- *200+ Countries Supported*: Comprehensive holiday data for countries worldwide
+- *Special India Focus*: Extensive Indian festival database including Hindu, Islamic, Christian, Sikh, and Buddhist holidays
+- *Smart Fallback System*: Multiple API sources ensure reliable holiday data
+- *Default India Selection*: Application starts with India pre-selected for immediate usability
 
 ### 📅 Intelligent Calendar Views
 
-- **Monthly View**: Detailed month-by-month holiday calendar with full week breakdown
-- **Quarterly View**: Overview of 3-month periods for better vacation planning
-- **Week Highlighting System**:
-  - 🟢 **Light Green (bg-green-200)**: Weeks with exactly 1 holiday
-  - 🟢 **Dark Green (bg-green-300)**: Weeks with 2+ holidays
-  - ⚪ **Normal**: Weeks with no holidays
+- *Monthly View*: Detailed month-by-month holiday calendar with full week breakdown
+- *Quarterly View*: Overview of 3-month periods for better vacation planning
+- *Week Highlighting System*:
+  - 🟢 *Light Green (bg-green-200)*: Weeks with exactly 1 holiday
+  - 🟢 *Dark Green (bg-green-300)*: Weeks with 2+ holidays
+  - ⚪ *Normal*: Weeks with no holidays
 
-### 🎨 Modern UI/UX
-
-- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile
-- **Clean Interface**: Built with Shadcn UI components for professional appearance
-- **Tailwind CSS**: Modern styling with carefully chosen darker green color scheme
-- **Intuitive Navigation**: Easy switching between views with clear controls
-
-### 🔄 Real-time Data Management
-
-- **Multiple API Integration**: Calendarific, Abstract Holidays, Date Nager APIs
-- **Comprehensive Predefined Database**: Complete 2024-2025 Indian festival calendar
-- **Smart Data Fallback**: Automatic fallback ensures data availability even when APIs fail
-- **English Holiday Names**: All festivals displayed in English for universal understanding
-
-## 🛠️ Tech Stack
+## 🛠 Tech Stack
 
 ### Backend (Node.js)
 
-- **Express.js** - Web application framework
-- **Axios** - HTTP client for API requests
-- **Moment.js** - Advanced date manipulation and formatting
-- **CORS** - Cross-origin resource sharing middleware
-- **Environment Variables** - Secure API key management
-- **RESTful APIs** - Clean endpoint structure
+- *Express.js* - Web application framework
+- *Axios* - HTTP client for API requests
+- *Moment.js* - Advanced date manipulation and formatting
+- *CORS* - Cross-origin resource sharing middleware
+- *Environment Variables* - Secure API key management
+- *RESTful APIs* - Clean endpoint structure
 
 ### Frontend (React)
 
-- **React 18** - Modern frontend library with hooks
-- **Shadcn UI** - High-quality, accessible React components
-- **Tailwind CSS** - Utility-first CSS framework with custom color scheme
-- **Axios** - Frontend API communication
-- **Lucide React** - Beautiful, consistent icons
-- **Responsive Design** - Mobile-first approach
+- *React 18* - Modern frontend library with hooks
+- *Shadcn UI* - High-quality, accessible React components
+- *Tailwind CSS* - Utility-first CSS framework with custom color scheme
+- *Axios* - Frontend API communication
+- *Lucide React* - Beautiful, consistent icons
+- *Responsive Design* - Mobile-first approach
 
 ### APIs & Data Sources
 
-- **Calendarific API** - Premium holiday data with comprehensive festival details
-- **Abstract Holidays API** - Reliable international holiday data (200+ countries)
-- **Date Nager API** - Free fallback for basic public holidays
-- **Predefined Holiday Database** - Curated Indian festival calendar (2024-2025)
-
-## 📁 Project Architecture
-
-```
-vacation-calendar/
-│
-├── backend/                    # Node.js Express Server
-│   ├── services/
-│   │   └── holidayService.js   # Core holiday data management & API integration
-│   ├── routes/
-│   │   └── holidays.js         # RESTful API endpoints
-│   ├── server.js               # Express server configuration
-│   ├── package.json            # Backend dependencies
-│   └── .env                    # API keys configuration (not in repo)
-│
-├── frontend/                   # React Application
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── MonthlyView.js  # Monthly calendar component with week highlighting
-│   │   │   ├── QuarterlyView.js # Quarterly calendar component
-│   │   │   └── ui/             # Shadcn UI components (Button, Card, Badge, etc.)
-│   │   ├── App.js              # Main application component with state management
-│   │   └── index.js            # React entry point
-│   ├── public/                 # Static assets
-│   ├── package.json            # Frontend dependencies
-│   └── tailwind.config.js      # Tailwind CSS configuration
-│
-├── start.bat                   # Windows startup script for easy development
-├── package.json                # Root package.json for unified scripts
-└── README.md                   # Comprehensive project documentation
-```
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- **Node.js** (v16 or higher)
-- **npm** (v8 or higher)
-- **Git** (for version control)
-
-### Quick Start Installation
-
-1. **Clone the repository**
-
-   ```bash
-   git clone https://github.com/shaktiDD/wissen_assingment.git
-   cd wissen_assingment/vacation-calendar
-   ```
-
-2. **Install all dependencies**
-
-   ```bash
-   # Install root dependencies
-   npm install
-
-   # Install backend dependencies
-   cd backend && npm install
-
-   # Install frontend dependencies
-   cd ../frontend && npm install
-   ```
-
-3. **Environment Configuration (Optional but Recommended)**
-   Create a `.env` file in the `backend` directory:
-
-   ```env
-   PORT=5000
-   CALENDARIFIC_API_KEY=your_calendarific_api_key_here
-   ABSTRACT_API_KEY=your_abstract_api_key_here
-   ```
-
-4. **Start the application**
-
-   **🚀 Option 1: One-Click Startup (Windows)**
-
-   ```bash
-   # From vacation-calendar directory - starts both frontend and backend
-   start.bat
-   ```
-
-   **🔧 Option 2: Manual Development Mode**
-
-   ```bash
-   # Terminal 1 - Backend server
-   cd backend
-   npm run dev
-
-   # Terminal 2 - Frontend development server
-   cd frontend
-   npm start
-   ```
-
-5. **Access the application**
-   - **Frontend**: http://localhost:3000
-   - **Backend API**: http://localhost:5000
-   - **API Health Check**: http://localhost:5000/api/health
-
-## 🎯 How It Works
-
-### Holiday Data Flow & Intelligence
-
-```
-1. 📚 Predefined Database (Primary for India)
-   ↓ (if not available or different country)
-2. 🥇 Calendarific API (Premium festival data)
-   ↓ (if fails)
-3. 🥈 Abstract Holidays API (200+ countries)
-   ↓ (if fails)
-4. 🥉 Date Nager API (Basic public holidays)
-   ↓ (if all fail)
-5. ⚪ Graceful Empty Calendar
-```
-
-### Week Color Algorithm
-
-```javascript
-function getWeekColor(holidayCount) {
-  if (holidayCount === 0) return "normal"; // No styling
-  if (holidayCount === 1) return "bg-green-200"; // Light green
-  if (holidayCount >= 2) return "bg-green-300"; // Dark green
-}
-```
-
-### Supported Countries & Special Features
-
-- **🇮🇳 India**: Complete 2024-2025 festival database (25+ holidays/year)
-- **🌍 200+ Countries**: Via API integration
-- **🎯 Smart Detection**: Automatically uses best data source per country
-- **📱 Responsive**: Adapts to all screen sizes
-- **🔄 Real-time**: Updates calendar data dynamically
-
-## 📋 API Endpoints
-
-### Core Holiday Endpoints
-
-```http
-GET /api/holidays/month/:countryCode/:year/:month
-# Get detailed monthly holiday data with week breakdown
-
-GET /api/holidays/quarter/:countryCode/:year/:quarter
-# Get quarterly holiday data (3 months) for planning
-
-GET /api/holidays/countries
-# Get list of supported countries with codes
-
-GET /api/health
-# Health check endpoint for monitoring
-```
-
-### Example API Response
-
-```json
-{
-  "year": 2025,
-  "month": 10,
-  "monthName": "October",
-  "totalHolidays": 4,
-  "holidays": [
-    {
-      "date": "2025-10-02",
-      "name": "Gandhi Jayanti (Mahatma Gandhi's Birthday)",
-      "localName": "Gandhi Jayanti",
-      "global": true,
-      "type": "National holiday"
-    },
-    {
-      "date": "2025-10-21",
-      "name": "Diwali (Festival of Lights)",
-      "localName": "Diwali",
-      "global": true,
-      "type": "Hindu festival"
-    }
-  ],
-  "weeks": [
-    {
-      "weekNumber": 40,
-      "startDate": "2025-09-29",
-      "endDate": "2025-10-05",
-      "holidayCount": 1,
-      "weekColor": "green",
-      "holidays": [...],
-      "days": [...]
-    }
-  ]
-}
-```
-
-## 🌍 Complete Holiday Coverage
-
-### 🇮🇳 India - Comprehensive Festival Database (25+ Annual Holidays)
-
-**🏛️ National Holidays:**
-
-- New Year's Day (Jan 1) | Republic Day (Jan 26) | Independence Day (Aug 15) | Gandhi Jayanti (Oct 2)
-
-**🕉️ Major Hindu Festivals:**
-
-- Makar Sankranti (Jan 14) | Vasant Panchami (Feb 3) | Maha Shivratri (Feb 26) | Holi (Mar 14)
-- Ram Navami (Mar 30) | Hanuman Jayanti (Apr 21) | Raksha Bandhan (Aug 9) | Krishna Janmashtami (Aug 16)
-- Ganesh Chaturthi (Aug 27) | Dussehra (Oct 2) | Dhanteras (Oct 20) | **Diwali (Oct 21)**
-- Govardhan Puja (Oct 22) | Bhai Dooj (Oct 23)
-
-**🌺 Regional & Multi-Faith:**
-
-- Pongal - Tamil (Jan 15) | Baisakhi - Punjabi (Apr 13) | Buddha Purnima - Buddhist (May 12)
-- Eid ul-Adha - Islamic (Jun 6) | Guru Nanak Jayanti - Sikh (Nov 5) | Christmas - Christian (Dec 25)
-
-**📅 Complete 2024-2025 Coverage**: Pre-loaded comprehensive database ensures instant access
-
-### 🌐 International Support (200+ Countries)
-
-- **🇺🇸 United States** - **🇬🇧 United Kingdom** - **🇨🇦 Canada** - **🇦🇺 Australia**
-- **🇩🇪 Germany** - **🇫🇷 France** - **🇯🇵 Japan** - **🇨🇳 China** - **🇧🇷 Brazil**
-- **🇮🇹 Italy** - **🇪🇸 Spain** - **🇷🇺 Russia** - **🇲🇽 Mexico** - **🇰🇷 South Korea**
-- **And 180+ more countries via API integration**
-
-## 🎨 User Interface Features
-
-### Calendar Components
-
-- **MonthlyView**: Single month display with detailed week breakdown
-- **QuarterlyView**: Three-month overview for strategic planning
-- **Country Selector**: Dropdown with 200+ countries, India as default
-- **Year/Month Navigation**: Intuitive controls for time period selection
-
-### Visual Design System
-
-- **Color Coding**:
-  - Normal weeks: Default background
-  - Light green (`bg-green-200`): Single holiday weeks
-  - Dark green (`bg-green-300`): Multiple holiday weeks
-- **Typography**: Clean, readable fonts optimized for calendar display
-- **Responsive Layout**: Seamless experience across all device sizes
-- **Loading States**: Smooth loading indicators during data fetching
-
-## 🔧 Configuration & Environment
-
-### Required Environment Variables
-
-```env
-# Backend Configuration (in backend/.env)
-PORT=5000                              # Server port (default: 5000)
-NODE_ENV=development                   # Environment mode
-
-# API Keys (Optional but recommended for enhanced data)
-CALENDARIFIC_API_KEY=your_key_here     # Premium festival data
-ABSTRACT_API_KEY=your_key_here         # International holiday data
-```
-
-### Package.json Scripts
-
-```json
-{
-  "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "cd backend && npm start",
-    "client": "cd frontend && npm start",
-    "dev": "concurrently \"npm run server:dev\" \"npm run client\"",
-    "server:dev": "cd backend && npm run dev"
-  }
-}
-```
-
-## 📱 Responsive Design & Performance
-
-### Mobile Optimization
-
-- **Touch-friendly Interface**: Large, accessible touch targets
-- **Optimized Layout**: Condensed views for small screens
-- **Fast Loading**: Efficient data fetching and caching
-- **Offline Capability**: Predefined holiday database works without internet
-
-### Performance Features
-
-- **Smart Caching**: Reduces API calls through intelligent data management
-- **Lazy Loading**: Components load as needed
-- **Optimized Bundle**: Tree-shaking and code splitting
-- **Fast API Response**: Efficient backend processing with moment.js
-
-## 🤝 Contributing
-
-### Development Workflow
-
-1. **Fork** the repository
-2. **Create** a feature branch: `git checkout -b feature/amazing-feature`
-3. **Commit** changes: `git commit -m 'Add amazing feature'`
-4. **Push** to branch: `git push origin feature/amazing-feature`
-5. **Submit** a Pull Request with detailed description
-
-### Code Standards
-
-- **ESLint**: Code linting and formatting
-- **Component Structure**: Consistent React component patterns
-- **API Design**: RESTful endpoint conventions
-- **Documentation**: Comprehensive code comments
-
-## 📄 License & Acknowledgments
-
-### License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
-### Special Thanks
-
-- **🎯 Calendarific API** - Premium holiday and festival data
-- **🌐 Abstract Holidays API** - Reliable international coverage
-- **📅 Date Nager API** - Free public holiday fallback service
-- **🎨 Shadcn UI** - Beautiful, accessible React components
-- **🎨 Tailwind CSS** - Utility-first CSS framework
-- **⚛️ React Team** - Powerful frontend library
-
-## 📞 Support & Contact
-
-### Getting Help
-
-- **📚 Documentation**: This comprehensive README
-- **🐛 Bug Reports**: Create GitHub issues with detailed reproduction steps
-- **💡 Feature Requests**: Submit enhancement proposals via GitHub issues
-- **🤝 Community**: Contributing guidelines for collaboration
-
-### Project Maintenance
-
-- **Regular Updates**: Holiday database updated annually
-- **API Monitoring**: Continuous monitoring of external APIs
-- **Security Updates**: Regular dependency updates and security patches
-
----
-
-**🎉 Made with ❤️ for better vacation planning and holiday awareness**
-
-> _"Plan your vacations smarter with comprehensive holiday intelligence"_
+- *Calendarific API* - Premium holiday data with comprehensive festival details
+- *Abstract Holidays API* - Reliable international holiday data (200+ countries)
+- *Date Nager API* - Free fallback for basic public holidays
+- *Predefined Holiday Database* - Curated Indian festival calendar (2024-2025) (APIS where not providing that)
+
+### Screenshots
+<img width="1920" height="1020" alt="ss1" src="https://github.com/user-attachments/assets/3d1b6a80-d756-4253-b977-9a66dc4f202f" />
+<img width="1920" height="1020" alt="ss2" src="https://github.com/user-attachments/assets/d4869b3e-16e5-4c0e-920d-62fcf94a9c28" />
+<img width="1920" height="1020" alt="ss3" src="https://github.com/user-attachments/assets/4f96e8dd-0cfe-4de4-b708-7c0bb1abeb37" />
+<img width="1920" height="1020" alt="ss4" src="https://github.com/user-attachments/assets/6448e7a6-afd6-4d31-934a-5c0f5dd8d33a" />
+<img width="1920" height="1020" alt="ss5" src="https://github.com/user-attachments/assets/1f8835c6-6c10-4a5c-8fc1-1c84c4c2a44b" />
+<img width="1920" height="1020" alt="ss6" src="https://github.com/user-attachments/assets/69a63347-4bfd-48d9-bdbf-462e163d30ad" />
+<img width="846" height="1002" alt="ss7" src="https://github.com/user-attachments/assets/734fa915-2641-4b51-9527-898f130f75c8" />
+<img width="846" height="1002" alt="ss8" src="https://github.com/user-attachments/assets/1250fbd2-f147-4e4c-a14a-9187443ee219" />
+<img width="846" height="1002" alt="ss9" src="https://github.com/user-attachments/assets/12475826-7719-483c-90e6-ea962bc1449a" />
+<img width="846" height="1002" alt="ss10" src="https://github.com/user-attachments/assets/5cc2f0a4-994e-47a8-a24e-c29e597a4760" />
+<img width="846" height="1002" alt="ss11" src="https://github.com/user-attachments/assets/0cb02b88-81c2-4958-baf3-f5175d6580dc" />
