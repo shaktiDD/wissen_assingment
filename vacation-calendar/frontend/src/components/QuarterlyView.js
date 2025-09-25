@@ -64,7 +64,6 @@ const QuarterlyView = ({ country, year, quarter }) => {
                     </div>
                 </CardHeader>
                 <CardContent className="pt-0">
-                    {/* Mini calendar header */}
                     <div className="grid grid-cols-7 gap-1 mb-2">
                         {weekDays.map(day => (
                             <div key={day} className="p-1 text-center text-xs font-medium text-muted-foreground">
@@ -73,7 +72,6 @@ const QuarterlyView = ({ country, year, quarter }) => {
                         ))}
                     </div>
 
-                    {/* Mini calendar weeks */}
                     <div className="space-y-1">
                         {monthData.weeks.map(week => (
                             <div key={week.weekNumber} className={`grid grid-cols-7 gap-1 p-1 rounded border ${getWeekColorClass(week.weekColor)}`}>
@@ -91,7 +89,6 @@ const QuarterlyView = ({ country, year, quarter }) => {
                         ))}
                     </div>
 
-                    {/* Month holidays */}
                     {monthData.holidays.length > 0 && (
                         <div className="mt-4 space-y-1">
                             <div className="text-xs font-medium text-muted-foreground mb-2">Holidays:</div>
@@ -148,7 +145,6 @@ const QuarterlyView = ({ country, year, quarter }) => {
 
     return (
         <div className="space-y-6">
-            {/* Quarter Header */}
             <Card>
                 <CardHeader>
                     <div className="flex items-center justify-between">
@@ -162,12 +158,10 @@ const QuarterlyView = ({ country, year, quarter }) => {
                 </CardHeader>
             </Card>
 
-            {/* Three month view */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {quarterData.months.map(monthData => renderMiniMonth(monthData))}
             </div>
 
-            {/* Legend */}
             <Card>
                 <CardHeader>
                     <CardTitle className="text-lg">Legend</CardTitle>

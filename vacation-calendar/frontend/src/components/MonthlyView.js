@@ -23,7 +23,6 @@ const MonthlyView = ({ country, year, month }) => {
             setMonthData(response.data);
         } catch (err) {
             setError('Failed to load holiday data');
-            console.error('Error loading month data:', err);
         } finally {
             setLoading(false);
         }
@@ -129,7 +128,6 @@ const MonthlyView = ({ country, year, month }) => {
 
     return (
         <div className="space-y-6">
-            {/* Calendar */}
             <Card>
                 <CardHeader>
                     <div className="flex items-center justify-between">
@@ -149,9 +147,7 @@ const MonthlyView = ({ country, year, month }) => {
                 </CardContent>
             </Card>
 
-            {/* Legend and Holiday List */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Legend */}
                 <Card>
                     <CardHeader>
                         <CardTitle className="text-lg">Legend</CardTitle>
@@ -176,7 +172,6 @@ const MonthlyView = ({ country, year, month }) => {
                     </CardContent>
                 </Card>
 
-                {/* Holiday List */}
                 {monthData.holidays.length > 0 && (
                     <Card>
                         <CardHeader>

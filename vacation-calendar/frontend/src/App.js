@@ -28,7 +28,6 @@ function App() {
             setCountries(response.data);
             setLoading(false);
         } catch (error) {
-            console.error('Error fetching countries:', error);
             setLoading(false);
         }
     };
@@ -69,7 +68,6 @@ function App() {
     return (
         <div className="min-h-screen bg-gray-50">
             <div className="container mx-auto p-6 max-w-7xl">
-                {/* Header */}
                 <Card className="mb-6">
                     <CardHeader className="text-center">
                         <div className="flex items-center justify-center gap-3 mb-2">
@@ -82,11 +80,9 @@ function App() {
                     </CardHeader>
                 </Card>
 
-                {/* Controls */}
                 <Card className="mb-6">
                     <CardContent className="pt-6">
                         <div className="flex flex-wrap gap-4 items-center justify-center">
-                            {/* View Toggle */}
                             <div className="flex items-center gap-2">
                                 <label className="text-sm font-medium text-muted-foreground">View:</label>
                                 <div className="flex border rounded-lg overflow-hidden">
@@ -109,7 +105,6 @@ function App() {
                                 </div>
                             </div>
 
-                            {/* Country Selection */}
                             <div className="flex items-center gap-2">
                                 <Globe className="h-4 w-4 text-muted-foreground" />
                                 <label className="text-sm font-medium text-muted-foreground">Country:</label>
@@ -127,7 +122,6 @@ function App() {
                                 </Select>
                             </div>
 
-                            {/* Year Selection */}
                             <div className="flex items-center gap-2">
                                 <label className="text-sm font-medium text-muted-foreground">Year:</label>
                                 <Select value={selectedYear.toString()} onValueChange={(value) => setSelectedYear(parseInt(value))}>
@@ -144,7 +138,6 @@ function App() {
                                 </Select>
                             </div>
 
-                            {/* Month/Quarter Selection */}
                             {view === 'monthly' ? (
                                 <div className="flex items-center gap-2">
                                     <label className="text-sm font-medium text-muted-foreground">Month:</label>
@@ -182,7 +175,6 @@ function App() {
                     </CardContent>
                 </Card>
 
-                {/* Calendar View */}
                 {view === 'monthly' ? (
                     <MonthlyView
                         country={selectedCountry}
