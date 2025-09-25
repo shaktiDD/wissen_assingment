@@ -3,15 +3,11 @@ const moment = require('moment');
 
 class HolidayService {
     constructor() {
-       
         this.calendarificURL = 'https://calendarific.com/api/v2/holidays';
         this.calendarificKey = process.env.CALENDARIFIC_API_KEY || 'your_calendarific_api_key_here';
-
-    
         this.abstractURL = 'https://holidays.abstractapi.com/v1';
         this.abstractKey = process.env.ABSTRACT_API_KEY || 'your_api_key_here';
         this.fallbackURL = 'https://date.nager.at/api/v3';
-
         
         this.predefinedHolidays = {
             'IN': { 
@@ -91,15 +87,11 @@ class HolidayService {
         try {
             let allHolidays = [];
 
-            // First try to get predefined holidays for the country and year
             if (this.predefinedHolidays[countryCode] && this.predefinedHolidays[countryCode][year]) {
                 allHolidays = this.predefinedHolidays[countryCode][year];
-                console.log(`Using predefined comprehensive holidays for ${countryCode} ${year}`);
             } else {
-                // Try Calendarific API first (best for Indian festivals)
                 if (this.calendarificKey && this.calendarificKey !== 'your_calendarific_api_key_here') {
                     try {
-                        console.log('Trying Calendarific API for comprehensive festival data...');
                         const response = await axios.get(this.calendarificURL, {
                             params: {
                                 api_key: this.calendarificKey,
@@ -116,11 +108,8 @@ class HolidayService {
                                 global: holiday.primary_type !== 'Local holiday',
                                 type: holiday.primary_type || 'Holiday'
                             }));
-                            console.log(`Found ${allHolidays.length} holidays via Calendarific API`);
                         }
                     } catch (calendarificError) {
-                        console.log('Calendarific API failed, trying Abstract API...');
-                        // Try Abstract API if we have an API key
                         if (this.abstractKey && this.abstractKey !== 'your_api_key_here') {
                             try {
                                 const response = await axios.get(`${this.abstractURL}`, {
@@ -141,7 +130,6 @@ class HolidayService {
                                     }));
                                 }
                             } catch (abstractError) {
-                                console.log('Abstract API failed, trying Date Nager...');
                                 throw abstractError;
                             }
                         } else {
@@ -149,10 +137,8 @@ class HolidayService {
                         }
                     }
                 } else {
-                    // Try Abstract API if we have an API key
                     if (this.abstractKey && this.abstractKey !== 'your_api_key_here') {
                         try {
-                            console.log('Using Abstract API...');
                             const response = await axios.get(`${this.abstractURL}`, {
                                 params: {
                                     api_key: this.abstractKey,
@@ -171,13 +157,10 @@ class HolidayService {
                                 }));
                             }
                         } catch (abstractError) {
-                            console.log('Abstract API failed, trying Date Nager fallback...');
                             throw abstractError;
                         }
                     } else {
-                        // Try Date Nager API fallback
                         try {
-                            console.log('Using Date Nager API fallback for', countryCode);
                             const response = await axios.get(`${this.fallbackURL}/publicholidays/${year}/${countryCode}`);
                             allHolidays = response.data.map(holiday => ({
                                 date: holiday.date,
@@ -187,14 +170,12 @@ class HolidayService {
                                 type: holiday.types ? holiday.types.join(', ') : 'Holiday'
                             }));
                         } catch (fallbackError) {
-                            console.log('Date Nager API also failed, using predefined holidays');
                             allHolidays = [];
                         }
                     }
                 }
             }
 
-            // Filter holidays for specific month
             const monthHolidays = allHolidays.filter(holiday => {
                 const holidayDate = moment(holiday.date);
                 return holidayDate.month() + 1 === month;
@@ -203,7 +184,6 @@ class HolidayService {
             return this.calculateWeekData(monthHolidays, year, month);
         } catch (error) {
             console.error('All holiday APIs failed:', error.message);
-            // Return empty calendar if all APIs fail
             return this.calculateWeekData([], year, month);
         }
     }
@@ -212,15 +192,11 @@ class HolidayService {
         try {
             let allHolidays = [];
 
-            // First try to get predefined holidays for the country and year
             if (this.predefinedHolidays[countryCode] && this.predefinedHolidays[countryCode][year]) {
                 allHolidays = this.predefinedHolidays[countryCode][year];
-                console.log(`Using predefined comprehensive holidays for quarter ${countryCode} ${year}`);
             } else {
-                // Try Calendarific API first (best for Indian festivals)
                 if (this.calendarificKey && this.calendarificKey !== 'your_calendarific_api_key_here') {
                     try {
-                        console.log('Trying Calendarific API for quarter comprehensive festival data...');
                         const response = await axios.get(this.calendarificURL, {
                             params: {
                                 api_key: this.calendarificKey,
@@ -237,11 +213,8 @@ class HolidayService {
                                 global: holiday.primary_type !== 'Local holiday',
                                 type: holiday.primary_type || 'Holiday'
                             }));
-                            console.log(`Found ${allHolidays.length} holidays via Calendarific API for quarter`);
                         }
                     } catch (calendarificError) {
-                        console.log('Calendarific API failed for quarter, trying Abstract API...');
-                        // Try Abstract API if we have an API key
                         if (this.abstractKey && this.abstractKey !== 'your_api_key_here') {
                             try {
                                 const response = await axios.get(`${this.abstractURL}`, {
@@ -262,7 +235,6 @@ class HolidayService {
                                     }));
                                 }
                             } catch (abstractError) {
-                                console.log('Abstract API failed for quarter, trying Date Nager...');
                                 throw abstractError;
                             }
                         } else {
@@ -270,10 +242,8 @@ class HolidayService {
                         }
                     }
                 } else {
-                    // Try Abstract API if we have an API key
                     if (this.abstractKey && this.abstractKey !== 'your_api_key_here') {
                         try {
-                            console.log('Using Abstract API for quarter...');
                             const response = await axios.get(`${this.abstractURL}`, {
                                 params: {
                                     api_key: this.abstractKey,
@@ -292,13 +262,10 @@ class HolidayService {
                                 }));
                             }
                         } catch (abstractError) {
-                            console.log('Abstract API failed for quarter, trying Date Nager fallback...');
                             throw abstractError;
                         }
                     } else {
-                        // Try Date Nager API fallback
                         try {
-                            console.log('Using Date Nager API fallback for quarter', countryCode);
                             const response = await axios.get(`${this.fallbackURL}/publicholidays/${year}/${countryCode}`);
                             allHolidays = response.data.map(holiday => ({
                                 date: holiday.date,
@@ -308,7 +275,6 @@ class HolidayService {
                                 type: holiday.types ? holiday.types.join(', ') : 'Holiday'
                             }));
                         } catch (fallbackError) {
-                            console.log('Date Nager API also failed for quarter, using predefined holidays');
                             allHolidays = [];
                         }
                     }
@@ -338,7 +304,6 @@ class HolidayService {
             };
         } catch (error) {
             console.error('All holiday APIs failed for quarter:', error.message);
-            // Return empty quarter data if all APIs fail
             const quarterMonths = this.getQuarterMonths(quarter);
             const monthsData = [];
             for (const month of quarterMonths) {
@@ -355,7 +320,6 @@ class HolidayService {
 
     async getSupportedCountries() {
         try {
-            // Extended list of countries including India and others
             const extendedCountries = [
                 { code: 'IN', name: 'India' },
                 { code: 'US', name: 'United States' },
@@ -386,7 +350,6 @@ class HolidayService {
                 { code: 'SA', name: 'Saudi Arabia' }
             ];
 
-            // Try to get countries from Date Nager API and merge
             try {
                 const response = await axios.get(`${this.fallbackURL}/availablecountries`);
                 const dateNagerCountries = response.data.map(country => ({
@@ -394,7 +357,6 @@ class HolidayService {
                     name: country.name
                 }));
 
-                // Merge and remove duplicates
                 const allCountries = [...extendedCountries];
                 dateNagerCountries.forEach(country => {
                     if (!allCountries.find(c => c.code === country.code)) {
@@ -404,7 +366,6 @@ class HolidayService {
 
                 return allCountries.sort((a, b) => a.name.localeCompare(b.name));
             } catch (error) {
-                console.log('Using extended countries list only');
                 return extendedCountries.sort((a, b) => a.name.localeCompare(b.name));
             }
         } catch (error) {
@@ -429,7 +390,6 @@ class HolidayService {
                 days: []
             };
 
-            // Calculate days and holidays for this week
             for (let i = 0; i < 7; i++) {
                 const day = moment(current).add(i, 'days');
                 const dayHolidays = holidays.filter(holiday =>
@@ -446,7 +406,6 @@ class HolidayService {
                 week.holidays.push(...dayHolidays);
             }
 
-            // Remove duplicate holidays and set week color
             week.holidays = week.holidays.filter((holiday, index, self) =>
                 index === self.findIndex(h => h.date === holiday.date)
             );
