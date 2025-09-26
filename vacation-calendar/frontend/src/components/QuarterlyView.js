@@ -10,6 +10,7 @@ const QuarterlyView = ({ country, year, quarter }) => {
     const [quarterData, setQuarterData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [hideEmptyWeeks, setHideEmptyWeeks] = useState(false);
 
     useEffect(() => {
         loadQuarterData();
@@ -73,20 +74,22 @@ const QuarterlyView = ({ country, year, quarter }) => {
                     </div>
 
                     <div className="space-y-1">
-                        {monthData.weeks.map(week => (
-                            <div key={week.weekNumber} className={`grid grid-cols-7 gap-1 p-1 rounded border ${getWeekColorClass(week.weekColor)}`}>
-                                {week.days.map(day => (
-                                    <div key={day.date} className={`
+                        {monthData.weeks
+                            .filter(week => !hideEmptyWeeks || week.holidayCount > 0)
+                            .map(week => (
+                                <div key={week.weekNumber} className={`grid grid-cols-7 gap-1 p-1 rounded border ${getWeekColorClass(week.weekColor)}`}>
+                                    {week.days.map(day => (
+                                        <div key={day.date} className={`
                     w-6 h-6 flex items-center justify-center text-xs rounded
-                    ${!day.isInMonth ? 'text-gray-300' : 'text-gray-900'}
-                    ${isToday(day.date) ? 'bg-blue-500 text-white' : ''}
-                    ${day.holidays.length > 0 ? 'bg-red-100 text-red-800' : ''}
+                    ${!day.isInMonth ? 'invisible' : 'text-gray-900'}
+                    ${day.isInMonth && isToday(day.date) ? 'bg-blue-500 text-white' : ''}
+                    ${day.isInMonth && day.holidays.length > 0 ? 'bg-red-100 text-red-800' : ''}
                   `}>
-                                        {moment(day.date).date()}
-                                    </div>
-                                ))}
-                            </div>
-                        ))}
+                                            {day.isInMonth ? moment(day.date).date() : ''}
+                                        </div>
+                                    ))}
+                                </div>
+                            ))}
                     </div>
 
                     {monthData.holidays.length > 0 && (
@@ -141,7 +144,9 @@ const QuarterlyView = ({ country, year, quarter }) => {
         );
     }
 
-    const totalHolidays = quarterData.months.reduce((sum, month) => sum + month.totalHolidays, 0);
+    const totalHolidays = quarterData.months
+        .filter(month => month.totalHolidays > 0)
+        .reduce((sum, month) => sum + month.totalHolidays, 0);
 
     return (
         <div className="space-y-6">
@@ -151,15 +156,31 @@ const QuarterlyView = ({ country, year, quarter }) => {
                         <CardTitle className="text-2xl">
                             Q{quarterData.quarter} {quarterData.year}
                         </CardTitle>
-                        <Badge variant="secondary">
-                            {totalHolidays} Holiday{totalHolidays !== 1 ? 's' : ''} Total
-                        </Badge>
+                        <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-2">
+                                <label htmlFor="hideEmptyWeeksQuarter" className="text-sm font-medium cursor-pointer">
+                                    Hide empty weeks
+                                </label>
+                                <input
+                                    id="hideEmptyWeeksQuarter"
+                                    type="checkbox"
+                                    checked={hideEmptyWeeks}
+                                    onChange={(e) => setHideEmptyWeeks(e.target.checked)}
+                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 cursor-pointer"
+                                />
+                            </div>
+                            <Badge variant="secondary">
+                                {totalHolidays} Holiday{totalHolidays !== 1 ? 's' : ''} Total
+                            </Badge>
+                        </div>
                     </div>
                 </CardHeader>
             </Card>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {quarterData.months.map(monthData => renderMiniMonth(monthData))}
+                {quarterData.months
+                    .filter(monthData => monthData.totalHolidays > 0)
+                    .map(monthData => renderMiniMonth(monthData))}
             </div>
 
             <Card>

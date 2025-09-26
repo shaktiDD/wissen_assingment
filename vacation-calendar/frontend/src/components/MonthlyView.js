@@ -10,6 +10,7 @@ const MonthlyView = ({ country, year, month }) => {
     const [monthData, setMonthData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [hideEmptyWeeks, setHideEmptyWeeks] = useState(false);
 
     useEffect(() => {
         loadMonthData();
@@ -66,27 +67,31 @@ const MonthlyView = ({ country, year, month }) => {
                 {week.days.map(day => (
                     <div key={day.date} className={`
             min-h-[80px] p-2 rounded border
-            ${!day.isInMonth ? 'text-gray-300 bg-gray-50' : 'bg-white'}
-            ${isToday(day.date) ? 'ring-2 ring-blue-500 bg-blue-50' : ''}
-            hover:shadow-sm transition-shadow
+            ${!day.isInMonth ? 'invisible' : 'bg-white'}
+            ${day.isInMonth && isToday(day.date) ? 'ring-2 ring-blue-500 bg-blue-50' : ''}
+            ${day.isInMonth ? 'hover:shadow-sm transition-shadow' : ''}
           `}>
-                        <div className="text-sm font-medium mb-1">
-                            {moment(day.date).date()}
-                        </div>
-                        {day.holidays.length > 0 && (
-                            <div className="space-y-1">
-                                {day.holidays.map((holiday, index) => (
-                                    <div
-                                        key={index}
-                                        className="text-xs bg-red-100 text-red-800 px-1 py-0.5 rounded truncate"
-                                        title={holiday.localName || holiday.name}
-                                    >
-                                        <span className="inline-block w-2 h-2 bg-red-500 rounded-full mr-1"></span>
-                                        {(holiday.localName || holiday.name).substring(0, 12)}
-                                        {(holiday.localName || holiday.name).length > 12 && '...'}
+                        {day.isInMonth && (
+                            <>
+                                <div className="text-sm font-medium mb-1">
+                                    {moment(day.date).date()}
+                                </div>
+                                {day.holidays.length > 0 && (
+                                    <div className="space-y-1">
+                                        {day.holidays.map((holiday, index) => (
+                                            <div
+                                                key={index}
+                                                className="text-xs bg-red-100 text-red-800 px-1 py-0.5 rounded truncate"
+                                                title={holiday.localName || holiday.name}
+                                            >
+                                                <span className="inline-block w-2 h-2 bg-red-500 rounded-full mr-1"></span>
+                                                {(holiday.localName || holiday.name).substring(0, 12)}
+                                                {(holiday.localName || holiday.name).length > 12 && '...'}
+                                            </div>
+                                        ))}
                                     </div>
-                                ))}
-                            </div>
+                                )}
+                            </>
                         )}
                     </div>
                 ))}
@@ -134,15 +139,31 @@ const MonthlyView = ({ country, year, month }) => {
                         <CardTitle className="text-2xl">
                             {monthData.monthName} {monthData.year}
                         </CardTitle>
-                        <Badge variant="secondary">
-                            {monthData.totalHolidays} Holiday{monthData.totalHolidays !== 1 ? 's' : ''}
-                        </Badge>
+                        <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-2">
+                                <label htmlFor="hideEmptyWeeks" className="text-sm font-medium cursor-pointer">
+                                   Vacation Mode
+                                </label>
+                                <input
+                                    id="hideEmptyWeeks"
+                                    type="checkbox"
+                                    checked={hideEmptyWeeks}
+                                    onChange={(e) => setHideEmptyWeeks(e.target.checked)}
+                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 cursor-pointer"
+                                />
+                            </div>
+                            <Badge variant="secondary">
+                                {monthData.totalHolidays} Holiday{monthData.totalHolidays !== 1 ? 's' : ''}
+                            </Badge>
+                        </div>
                     </div>
                 </CardHeader>
                 <CardContent>
                     <div className="calendar">
                         {renderWeekHeader()}
-                        {monthData.weeks.map(week => renderWeek(week))}
+                        {monthData.weeks
+                            .filter(week => !hideEmptyWeeks || week.holidayCount > 0)
+                            .map(week => renderWeek(week))}
                     </div>
                 </CardContent>
             </Card>
